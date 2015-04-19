@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Configure</title>
+  <link rel="stylesheet" href="https://aui-cdn.atlassian.com/aui-adg/5.6.16/css/aui.css" media="all">
+  <!--[if lt IE 9]>
+    <link rel="stylesheet" href="https://aui-cdn.atlassian.com/aui-adg/5.6.16/css/aui-ie.css" media="all">
+  <![endif]-->
+  <!--[if IE 9]>
+    <link rel="stylesheet" href="https://aui-cdn.atlassian.com/aui-adg/5.6.16/css/aui-ie9.css" media="all">
+  <![endif]-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="https://aui-cdn.atlassian.com/aui-adg/5.6.16/js/aui.js" type="text/javascript"></script>
+  <!--[if lt IE 9]><script src="https://aui-cdn.atlassian.com/aui-adg/5.6.16/js/aui-ie.js"></script><![endif]-->
+  <script src="https://www.hipchat.com/atlassian-connect/all.js"></script>
+  <link rel="stylesheet" href="https://www.hipchat.com/atlassian-connect/all.css">
+</head>
+<body class="aui-page-focused">
+{% if error %}
+  <section id="messages" role="alert">
+    <div class="aui-page-panel">
+      <div class="aui-page-panel-inner">
+        <div class="aui-message aui-message-error">
+          <p class="title">
+            <strong>Couldn't save</strong>
+          </p>
+
+          <p>{{ error }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+{% if success %}
+  <section id="messages" role="alert">
+    <div class="aui-page-panel">
+      <div class="aui-page-panel-inner">
+
+        <div class="aui-message aui-message-success">
+          <p class="title">
+            <strong>Success</strong>
+          </p>
+
+          <p>{{ success }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+<section id="content" role="main">
+  <!-- Content -->
+  <div class="aui-page-panel">
+    <div class="aui-page-panel-inner">
+      <section class="aui-page-panel-content">
+        <div>
+          <form class="aui unsectioned" id="addon-config-form" method="post">
+            <div class="field-group">
+              <label for="apikey">close.io API key<span class="aui-icon icon-required">required</span></label>
+                <input id="apikey" name="apikey"  class="text long-field" title="API key" value="{{ api_key }}"/>
+            </div>
+            <div>
+              <button class="aui-button" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+</body>
+</html>

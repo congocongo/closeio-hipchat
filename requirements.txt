@@ -1,0 +1,2 @@
+Flask-Hipchat-Addon
+closeio-api

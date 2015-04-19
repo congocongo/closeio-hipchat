@@ -1,0 +1,11 @@
+{{lead.display_name}}<br/>
+{% if contacts %}
+  {% if contacts[0].name %}{{contacts[0].name}}{% else %}Unnamed{% endif %}<br/>
+  {% if len(contacts) > 1 %}+{{ len(contacts) - 1}}{% endif %}
+{% endif %}
+Status: {{lead.status label}}<br/>
+{% if opportunities %}
+  {{organization.currency_symbol}}{{opportunity[0].value}}
+  {{opportunity[0].value_period}} {{opportunity[0].status_label}} opportunity
+{% endif %}
+
