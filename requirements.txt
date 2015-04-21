@@ -1,2 +1,6 @@
+python-redis
+psycopg2
+Flask-SQLAlchemy
 Flask-Hipchat-Addon
+Flask-Cache
 closeio-api
