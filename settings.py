@@ -1,4 +1,4 @@
-SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+#SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
 HIPCHAT_ADDON_KEY = 'closeio-hipchat'
 HIPCHAT_ADDON_NAME = 'close.io'
