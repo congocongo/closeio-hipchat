@@ -30,6 +30,8 @@ class CloseIOApi(db.Model):
         self.tenant_id = tenant_id
         self.api_key = api_key
 
+db.create_all()
+
 
 @cache.memoize(timeout=3600)
 def get_api_key(tenant_id):
