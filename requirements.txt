@@ -1,5 +1,5 @@
 psycopg2
 Flask-SQLAlchemy
 Flask-Cache
--e https://github.com/congocongo/flask-hipchat-addon.git#egg=flask-hipchat-addon
+-e git://github.com/congocongo/flask-hipchat-addon.git#egg=flask-hipchat-addon
 closeio-api
