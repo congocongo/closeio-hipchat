@@ -31,11 +31,14 @@ def get_api_key(tenant_id):
     close_io_api = CloseIOApi.query.filter_by(tenant_id=tenant_id).first()
     return close_io_api.api_key
 
+
 def get_lead_info(api, lead_id):
-    lead = api.get('lead/'+lead_id, data={'_fields': 'id,display_name'})
+    lead = api.get('lead/'+lead_id,
+                   data={'_fields': 'id,display_name,status_label,opportunities,contacts,organization_id'})
+    app.logger.debug('lead: %s', lead)
     return lead
 
-LEAD_REGEXP = re.compile(ur'.*(https://app\.close\.io\/lead\/)(lead_[a-zA-Z0-9]+)', re.MULTILINE | re.UNICODE)
+LEAD_REGEXP = re.compile(ur'.*https://app\.close\.io\/lead\/(lead_[a-zA-Z0-9]+)', re.MULTILINE | re.UNICODE)
 
 
 @addon.webhook(event='room_message', pattern='https:\/\/app\.close\.io\/lead\/lead_[a-zA-Z0-9]+')
@@ -46,13 +49,13 @@ def room_message_hook():
 
     matched = re.match(LEAD_REGEXP, message)
     if matched:
-        lead_url = matched.group(1) + matched.group(2)
-        lead_id = matched.group(2)
+        lead_id = matched.group(1)
         api = CloseIO_API(get_api_key(tenant.id))
         lead = get_lead_info(api, lead_id)
-        notification = '<a href="'+lead_url+'">'+lead_url+'</a><br/><b>'+lead['display_name']+'</b>'
-        room_client = RoomClient(room_id)
-        room_client.send_notification(notification)
+        if lead:
+            notification = render_template('lead.html', lead=lead)
+            room_client = RoomClient(room_id)
+            room_client.send_notification(notification)
     return '', 204
 
 

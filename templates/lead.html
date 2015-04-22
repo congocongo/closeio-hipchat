@@ -1,11 +1,12 @@
-{{lead.display_name}}<br/>
-{% if contacts %}
-  {% if contacts[0].name %}{{contacts[0].name}}{% else %}Unnamed{% endif %}<br/>
-  {% if len(contacts) > 1 %}+{{ len(contacts) - 1}}{% endif %}
+<b>{{lead.display_name}}</b><br/>
+{% if lead.contacts %}
+  <b>Contacts:</b> {% if lead.contacts[0].name %}{{lead.contacts[0].name}}{% else %}Unnamed{% endif %}
+  {% if lead.contacts|length > 1 %}+{{ lead.contacts|length - 1}}{% endif %}<br/>
 {% endif %}
-Status: {{lead.status label}}<br/>
-{% if opportunities %}
-  {{organization.currency_symbol}}{{opportunity[0].value}}
-  {{opportunity[0].value_period}} {{opportunity[0].status_label}} opportunity
+<b>Status:</b> {{lead.status_label}}<br/>
+{% if lead.opportunities %}
+<b>Opportunities:</b>
+  {# {{organization.currency_symbol}} #} {{lead.opportunities[0].value}}
+  {{lead.opportunities[0].value_period}} {{lead.opportunities[0].status_label}} opportunity
 {% endif %}
 
