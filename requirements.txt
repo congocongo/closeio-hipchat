@@ -1,5 +1,6 @@
-psycopg2
-Flask-SQLAlchemy
+SQLAlchemy==0.9.8
+psycopg2==2.4.5
+SQLAlchemy==0.9.8
 Flask-Cache
 -e git://github.com/congocongo/flask-hipchat-addon.git#egg=flask-hipchat-addon
 closeio-api
