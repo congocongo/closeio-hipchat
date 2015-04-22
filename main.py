@@ -30,8 +30,6 @@ class CloseIOApi(db.Model):
         self.tenant_id = tenant_id
         self.api_key = api_key
 
-db.create_all()
-
 
 @cache.memoize(timeout=3600)
 def get_api_key(tenant_id):
@@ -102,6 +100,7 @@ def on_uninstall(event):
 if __name__ == '__main__':
     with app.app_context():
         cache.clear()
+        db.create_all()
     events.register_event("uninstall", on_uninstall)
     port = int(os.environ.get('PORT', 5000))
     addon.run(host='0.0.0.0', port=port, debug=True)
