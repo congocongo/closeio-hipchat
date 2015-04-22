@@ -40,7 +40,6 @@ def get_api_key(tenant_id):
 def get_lead_info(api, lead_id):
     lead = api.get('lead/'+lead_id,
                    data={'_fields': 'id,display_name,status_label,opportunities,contacts,organization_id'})
-    app.logger.debug('lead: %s', lead)
     return lead
 
 LEAD_REGEXP = re.compile(ur'.*https://app\.close\.io\/lead\/(lead_[a-zA-Z0-9]+)', re.MULTILINE | re.UNICODE)
@@ -103,5 +102,5 @@ if __name__ == '__main__':
         db.create_all()
     events.register_event("uninstall", on_uninstall)
     port = int(os.environ.get('PORT', 5000))
-    addon.run(host='0.0.0.0', port=port, debug=True)
+    addon.run(host='0.0.0.0', port=port)
 

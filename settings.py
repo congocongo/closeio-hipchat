@@ -9,4 +9,4 @@ HIPCHAT_ADDON_BASE_URL = 'https://closeio-hipchat.herokuapp.com'
 
 CACHE_TYPE = 'simple'
 
-DEBUG=True
+DEBUG=False
