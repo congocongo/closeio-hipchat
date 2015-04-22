@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import json
+
 
 from flask import Flask, request, render_template
 from flask_hipchat_addon.addon import Addon, db, cache
@@ -14,7 +16,7 @@ from closeio_api import Client as CloseIO_API, APIError
 app = Flask(__name__)
 app.config.from_object('settings')
 
-app.config.setdefault('SQLALCHEMY_DATABASE_URI', environ.get('DATABASE_URL'))
+app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
 
 addon = Addon(app=app, allow_global=True, scopes=['send_notification'])
 
