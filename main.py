@@ -18,6 +18,14 @@ app.config.from_object('settings')
 
 app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
 
+for name in ['HIPCHAT_ADDON_KEY',
+             'HIPCHAT_ADDON_NAME',
+             'HIPCHAT_ADDON_DESCRIPTION',
+             'HIPCHAT_ADDON_VENDOR_URL',
+             'HIPCHAT_ADDON_VENDOR_NAME',
+             'HIPCHAT_ADDON_BASE_URL']:
+    app.config.setdefault(name, os.environ.get(name))
+
 addon = Addon(app=app, allow_global=True, scopes=['send_notification'])
 
 
