@@ -11,7 +11,7 @@ from flask_hipchat_addon.addon import Addon, db, cache
 from flask_hipchat_addon.clients import RoomClient
 from flask_hipchat_addon.auth import tenant, sender
 from flask_hipchat_addon.events import events
-from closeio_api import Client as CloseIO_API, APIError
+from closeio_api import Client as CloseIO_API
 
 app = Flask(__name__)
 app.config.from_object('settings')
