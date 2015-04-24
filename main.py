@@ -13,7 +13,40 @@ from flask_hipchat_addon.auth import tenant, sender
 from flask_hipchat_addon.events import events
 from closeio_api import Client as CloseIO_API
 
+
+class CloseIOApi(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey('tenant.id'), nullable=False)
+    api_key = db.Column(db.Text, nullable=False)
+
+    def __init__(self, tenant_id, api_key):
+        self.tenant_id = tenant_id
+        self.api_key = api_key
+
+
+def on_uninstall(event):
+    cache.delete_memoized(get_api_key, event['client'].id)
+    close_io_api = CloseIOApi.query.filter_by(tenant_id=event['client'].id).first()
+    db.session.delete(close_io_api)
+    db.session.commit()
+
+
+class CloseioAddon(Addon):
+
+    def __init__(self, app, key=None, name=None, description=None,
+                 allow_room=True, allow_global=False, scopes=None, vendor_name=None, vendor_url=None):
+
+        super(CloseioAddon, self).__init__(app, key, name, description,
+                                           allow_room, allow_global, scopes, vendor_name, vendor_url)
+
+        with self.app.app_context():
+            cache.clear()
+            db.create_all()
+        events.register_event("uninstall", on_uninstall)
+
+
 app = Flask(__name__)
+
 app.config.from_object('settings')
 
 app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
@@ -26,17 +59,8 @@ for name in ['HIPCHAT_ADDON_KEY',
              'HIPCHAT_ADDON_BASE_URL']:
     app.config.setdefault(name, os.environ.get(name))
 
-addon = Addon(app=app, allow_global=True, scopes=['send_notification'])
 
-
-class CloseIOApi(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    tenant_id = db.Column(db.Integer, db.ForeignKey('tenant.id'), nullable=False)
-    api_key = db.Column(db.Text, nullable=False)
-
-    def __init__(self, tenant_id, api_key):
-        self.tenant_id = tenant_id
-        self.api_key = api_key
+addon = CloseioAddon(app=app, allow_global=True, scopes=['send_notification'])
 
 
 @cache.memoize(timeout=3600)
@@ -98,21 +122,6 @@ def save_configuration():
     return configure_page(success='New key was saved')
 
 
-def on_uninstall(event):
-    cache.delete_memoized(get_api_key, event['client'].id)
-    close_io_api = CloseIOApi.query.filter_by(tenant_id=event['client'].id).first()
-    db.session.delete(close_io_api)
-    db.session.commit()
-
-
-def main():
-    with app.app_context():
-        cache.clear()
-        db.create_all()
-    events.register_event("uninstall", on_uninstall)
+if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     addon.run(host='0.0.0.0', port=port)
-
-
-if __name__ == '__main__':
-    main()
