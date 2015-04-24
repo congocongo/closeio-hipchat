@@ -1,6 +1,7 @@
-SQLAlchemy==0.9.8
-psycopg2==2.4.5
-Flask-SQLAlchemy==2.0
-Flask-Cache==0.13.1
--e git://github.com/congocongo/flask-hipchat-addon.git#egg=flask-hipchat-addon
-closeio-api
+gunicorn>=17.5
+SQLAlchemy>=0.9.8
+psycopg2>=2.4.5
+Flask-SQLAlchemy>=2.0
+Flask-Cache>=0.13.1
+-e git://github.com/congocongo/flask-hipchat-addon.git#egg=flask-hipchat-addon@f54471352583e31bcdaa44942a0cfcbb771483f1
+closeio-api>=0.1

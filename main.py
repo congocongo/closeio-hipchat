@@ -104,7 +104,8 @@ def on_uninstall(event):
     db.session.delete(close_io_api)
     db.session.commit()
 
-if __name__ == '__main__':
+
+def main():
     with app.app_context():
         cache.clear()
         db.create_all()
@@ -112,3 +113,6 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     addon.run(host='0.0.0.0', port=port)
 
+
+if __name__ == '__main__':
+    main()
