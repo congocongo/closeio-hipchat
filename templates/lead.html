@@ -1,4 +1,4 @@
-<b>{{lead.display_name}}</b><br/>
+<b><a href="https://app.close.io/lead/{{ lead.id }}">{{lead.display_name}}</a></b><br/>
 {% if lead.contacts %}
   <b>Contacts:</b> {% if lead.contacts[0].name %}{{lead.contacts[0].name}}{% else %}Unnamed{% endif %}
   {% if lead.contacts|length > 1 %}+{{ lead.contacts|length - 1}}{% endif %}<br/>
