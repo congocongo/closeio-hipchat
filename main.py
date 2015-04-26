@@ -75,7 +75,7 @@ def get_lead_info(api, lead_id):
     return lead
 
 def get_orga_info(api, orga_id):
-    orga = api.get('orga/'+orga_id,
+    orga = api.get('organization/'+orga_id,
                    data={'_fields': 'id,currency_symbol'})
     return orga
 
