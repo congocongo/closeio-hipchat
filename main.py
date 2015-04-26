@@ -74,6 +74,11 @@ def get_lead_info(api, lead_id):
                    data={'_fields': 'id,display_name,status_label,opportunities,contacts,organization_id'})
     return lead
 
+def get_orga_info(api, orga_id):
+    orga = api.get('orga/'+orga_id,
+                   data={'_fields': 'id,currency_symbol'})
+    return orga
+
 LEAD_REGEXP = re.compile(ur'.*https://app\.close\.io\/lead\/(lead_[a-zA-Z0-9]+)', re.MULTILINE | re.UNICODE)
 
 
@@ -89,7 +94,8 @@ def room_message_hook():
         api = CloseIO_API(get_api_key(tenant.id))
         lead = get_lead_info(api, lead_id)
         if lead:
-            notification = render_template('lead.html', lead=lead)
+            orga = get_orga_info(api, lead['organization_id'])
+            notification = render_template('lead.html', lead=lead, orga=orga)
             room_client = RoomClient(room_id)
             room_client.send_notification(notification)
     return '', 204

@@ -6,7 +6,7 @@
 <b>Status:</b> {{lead.status_label}}<br/>
 {% if lead.opportunities %}
 <b>Opportunities:</b>
-  {# {{organization.currency_symbol}} #} {{lead.opportunities[0].value}}
-  {{lead.opportunities[0].value_period}} {{lead.opportunities[0].status_label}} opportunity
+  {{orga.currency_symbol}} {{ lead.opportunities[0].value/100|round(2) }}
+  {{lead.opportunities[0].value_period}} {{ lead.opportunities[0].status_label }}
 {% endif %}
 
